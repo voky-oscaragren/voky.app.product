@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Voky.app.product.api.DTOs;
+using Voky.app.product.api.Models;
 using Voky.app.product.api.Services;
 
 namespace Voky.app.product.api.Controllers;
@@ -10,7 +11,7 @@ namespace Voky.app.product.api.Controllers;
 public class ProductsController(ProductService productService) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType<IEnumerable<ProductDto>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
         var products = await productService.GetAllAsync();
@@ -18,7 +19,7 @@ public class ProductsController(ProductService productService) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType<ProductDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<Product>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -27,7 +28,7 @@ public class ProductsController(ProductService productService) : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType<ProductDto>(StatusCodes.Status201Created)]
+    [ProducesResponseType<Product>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
     {
@@ -36,7 +37,7 @@ public class ProductsController(ProductService productService) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [ProducesResponseType<ProductDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<Product>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
