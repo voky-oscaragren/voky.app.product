@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Voky.app.product.api.Data;
+using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<DbProductService>();
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 

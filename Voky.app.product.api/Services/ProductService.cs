@@ -1,23 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.DTOs;
 using Voky.app.product.api.Models;
 
 namespace Voky.app.product.api.Services;
 
-public class ProductService(AppDbContext db) : IProductService
+public class ProductService(DbProductService dbProductService)
 {
     public async Task<IEnumerable<ProductDto>> GetAllAsync()
     {
-        return await db.Products
-            .AsNoTracking()
-            .Select(p => ToDto(p))
-            .ToListAsync();
+        var products = await dbProductService.GetAllAsync();
+        return products.Select(ToDto);
     }
 
     public async Task<ProductDto?> GetByIdAsync(Guid id)
     {
-        var product = await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+        var product = await dbProductService.GetByIdAsync(id);
         return product is null ? null : ToDto(product);
     }
 
@@ -31,35 +28,27 @@ public class ProductService(AppDbContext db) : IProductService
             Stock = dto.Stock,
         };
 
-        db.Products.Add(product);
-        await db.SaveChangesAsync();
-        return ToDto(product);
+        var created = await dbProductService.CreateAsync(product);
+        return ToDto(created);
     }
 
     public async Task<ProductDto?> UpdateAsync(Guid id, UpdateProductDto dto)
     {
-        var product = await db.Products.FindAsync(id);
-        if (product is null) return null;
+        var product = new Product
+        {
+            Id = id,
+            Name = dto.Name,
+            Description = dto.Description,
+            Price = dto.Price,
+            Stock = dto.Stock,
+        };
 
-        product.Name = dto.Name;
-        product.Description = dto.Description;
-        product.Price = dto.Price;
-        product.Stock = dto.Stock;
-        product.UpdatedAt = DateTime.UtcNow;
-
-        await db.SaveChangesAsync();
-        return ToDto(product);
+        var updated = await dbProductService.UpdateAsync(product);
+        return updated is null ? null : ToDto(updated);
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-        var product = await db.Products.FindAsync(id);
-        if (product is null) return false;
-
-        db.Products.Remove(product);
-        await db.SaveChangesAsync();
-        return true;
-    }
+    public async Task<bool> DeleteAsync(Guid id) =>
+        await dbProductService.DeleteAsync(id);
 
     private static ProductDto ToDto(Product p) =>
         new(p.Id, p.Name, p.Description, p.Price, p.Stock, p.CreatedAt, p.UpdatedAt);

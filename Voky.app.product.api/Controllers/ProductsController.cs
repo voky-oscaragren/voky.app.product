@@ -7,7 +7,7 @@ namespace Voky.app.product.api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class ProductsController(IProductService productService) : ControllerBase
+public class ProductsController(ProductService productService) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType<IEnumerable<ProductDto>>(StatusCodes.Status200OK)]
