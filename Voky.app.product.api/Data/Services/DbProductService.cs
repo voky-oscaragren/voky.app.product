@@ -30,7 +30,7 @@ public class DbProductService(AppDbContext db)
         existing.SendToOpti = product.SendToOpti;
         existing.ArtNrStartCost = product.ArtNrStartCost;
         existing.StartCostAmount = product.StartCostAmount;
-        existing.MainSupplierId = product.MainSupplierId;
+        existing.MainSupplierNr = product.MainSupplierNr;
         existing.LifecycleId = product.LifecycleId;
         existing.QuestionGroupId = product.QuestionGroupId;
         existing.UpdatedAt = DateTime.UtcNow;

@@ -18,10 +18,10 @@ public class QuestionChoicesController(QuestionChoiceService questionChoiceServi
         return Ok(choices);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType<QuestionChoice>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(int id)
     {
         var choice = await questionChoiceService.GetByIdAsync(id);
         return choice is null ? NotFound() : Ok(choice);
@@ -33,6 +33,6 @@ public class QuestionChoicesController(QuestionChoiceService questionChoiceServi
     public async Task<IActionResult> Create([FromBody] CreateQuestionChoiceDto dto)
     {
         var choice = await questionChoiceService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = choice.Id }, choice);
+        return CreatedAtAction(nameof(GetById), new { id = choice.QuestionChoiceId }, choice);
     }
 }

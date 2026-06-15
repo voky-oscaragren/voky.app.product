@@ -8,8 +8,8 @@ public class DbQuestionChoiceService(AppDbContext db)
     public async Task<IEnumerable<QuestionChoice>> GetAllAsync() =>
         await db.QuestionChoices.AsNoTracking().ToListAsync();
 
-    public async Task<QuestionChoice?> GetByIdAsync(Guid id) =>
-        await db.QuestionChoices.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+    public async Task<QuestionChoice?> GetByIdAsync(int id) =>
+        await db.QuestionChoices.AsNoTracking().FirstOrDefaultAsync(c => c.QuestionChoiceId == id);
 
     public async Task<QuestionChoice> CreateAsync(QuestionChoice choice)
     {

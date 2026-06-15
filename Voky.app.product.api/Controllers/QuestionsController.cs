@@ -18,10 +18,10 @@ public class QuestionsController(QuestionService questionService) : ControllerBa
         return Ok(questions);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType<Question>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(int id)
     {
         var question = await questionService.GetByIdAsync(id);
         return question is null ? NotFound() : Ok(question);
@@ -33,6 +33,6 @@ public class QuestionsController(QuestionService questionService) : ControllerBa
     public async Task<IActionResult> Create([FromBody] CreateQuestionDto dto)
     {
         var question = await questionService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = question.Id }, question);
+        return CreatedAtAction(nameof(GetById), new { id = question.QuestionId }, question);
     }
 }

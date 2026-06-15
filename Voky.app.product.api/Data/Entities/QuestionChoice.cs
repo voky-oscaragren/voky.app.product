@@ -5,9 +5,9 @@ namespace Voky.app.product.api.Models;
 public class QuestionChoice
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int QuestionChoiceId { get; set; }
 
-    public Guid QuestionId { get; set; }
+    public int QuestionId { get; set; }
     public Question Question { get; set; } = null!;
 
     [Required, MaxLength(60)]

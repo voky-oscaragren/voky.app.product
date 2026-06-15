@@ -24,7 +24,7 @@ public class ProductService(DbProductService dbProductService)
             SendToOpti = dto.SendToOpti,
             ArtNrStartCost = dto.ArtNrStartCost,
             StartCostAmount = dto.StartCostAmount,
-            MainSupplierId = dto.MainSupplierId,
+            MainSupplierNr = dto.MainSupplierNr,
             LifecycleId = dto.LifecycleId,
             QuestionGroupId = dto.QuestionGroupId,
         };
@@ -44,7 +44,7 @@ public class ProductService(DbProductService dbProductService)
             SendToOpti = dto.SendToOpti,
             ArtNrStartCost = dto.ArtNrStartCost,
             StartCostAmount = dto.StartCostAmount,
-            MainSupplierId = dto.MainSupplierId,
+            MainSupplierNr = dto.MainSupplierNr,
             LifecycleId = dto.LifecycleId,
             QuestionGroupId = dto.QuestionGroupId,
         };

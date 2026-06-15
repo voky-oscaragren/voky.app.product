@@ -28,13 +28,14 @@ public class Product
     [Column(TypeName = "decimal(18,2)")]
     public decimal? StartCostAmount { get; set; }
 
-    public Guid? MainSupplierId { get; set; }
+    [MaxLength(50)]
+    public string? MainSupplierNr { get; set; }
     public MainSupplier? MainSupplier { get; set; }
 
     public int? LifecycleId { get; set; }
     public Lifecycle? Lifecycle { get; set; }
 
-    public Guid? QuestionGroupId { get; set; }
+    public int? QuestionGroupId { get; set; }
     public QuestionGroup? QuestionGroup { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

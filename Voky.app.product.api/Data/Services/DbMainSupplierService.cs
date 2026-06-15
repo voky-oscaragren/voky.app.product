@@ -8,8 +8,8 @@ public class DbMainSupplierService(AppDbContext db)
     public async Task<IEnumerable<MainSupplier>> GetAllAsync() =>
         await db.MainSuppliers.AsNoTracking().ToListAsync();
 
-    public async Task<MainSupplier?> GetByIdAsync(Guid id) =>
-        await db.MainSuppliers.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
+    public async Task<MainSupplier?> GetByIdAsync(string supplierNr) =>
+        await db.MainSuppliers.AsNoTracking().FirstOrDefaultAsync(s => s.SupplierNr == supplierNr);
 
     public async Task<MainSupplier> CreateAsync(MainSupplier supplier)
     {

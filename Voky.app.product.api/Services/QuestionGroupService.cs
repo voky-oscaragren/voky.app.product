@@ -9,7 +9,7 @@ public class QuestionGroupService(DbQuestionGroupService dbQuestionGroupService)
     public async Task<IEnumerable<QuestionGroup>> GetAllAsync() =>
         await dbQuestionGroupService.GetAllAsync();
 
-    public async Task<QuestionGroup?> GetByIdAsync(Guid id) =>
+    public async Task<QuestionGroup?> GetByIdAsync(int id) =>
         await dbQuestionGroupService.GetByIdAsync(id);
 
     public async Task<QuestionGroup> CreateAsync(CreateQuestionGroupDto dto)

@@ -4,10 +4,7 @@ namespace Voky.app.product.api.Models;
 
 public class MainSupplier
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
-
-    [Required, MaxLength(50)]
+    [Key, MaxLength(50)]
     public string SupplierNr { get; set; } = string.Empty;
 
     [Required, MaxLength(200)]

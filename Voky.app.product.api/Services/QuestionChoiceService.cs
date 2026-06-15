@@ -9,7 +9,7 @@ public class QuestionChoiceService(DbQuestionChoiceService dbQuestionChoiceServi
     public async Task<IEnumerable<QuestionChoice>> GetAllAsync() =>
         await dbQuestionChoiceService.GetAllAsync();
 
-    public async Task<QuestionChoice?> GetByIdAsync(Guid id) =>
+    public async Task<QuestionChoice?> GetByIdAsync(int id) =>
         await dbQuestionChoiceService.GetByIdAsync(id);
 
     public async Task<QuestionChoice> CreateAsync(CreateQuestionChoiceDto dto)

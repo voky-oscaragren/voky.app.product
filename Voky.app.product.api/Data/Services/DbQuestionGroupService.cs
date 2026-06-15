@@ -8,8 +8,8 @@ public class DbQuestionGroupService(AppDbContext db)
     public async Task<IEnumerable<QuestionGroup>> GetAllAsync() =>
         await db.QuestionGroups.AsNoTracking().ToListAsync();
 
-    public async Task<QuestionGroup?> GetByIdAsync(Guid id) =>
-        await db.QuestionGroups.AsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
+    public async Task<QuestionGroup?> GetByIdAsync(int id) =>
+        await db.QuestionGroups.AsNoTracking().FirstOrDefaultAsync(g => g.QuestionGroupId == id);
 
     public async Task<QuestionGroup> CreateAsync(QuestionGroup group)
     {

@@ -9,8 +9,8 @@ public class MainSupplierService(DbMainSupplierService dbMainSupplierService)
     public async Task<IEnumerable<MainSupplier>> GetAllAsync() =>
         await dbMainSupplierService.GetAllAsync();
 
-    public async Task<MainSupplier?> GetByIdAsync(Guid id) =>
-        await dbMainSupplierService.GetByIdAsync(id);
+    public async Task<MainSupplier?> GetByIdAsync(string supplierNr) =>
+        await dbMainSupplierService.GetByIdAsync(supplierNr);
 
     public async Task<MainSupplier> CreateAsync(CreateMainSupplierDto dto)
     {
