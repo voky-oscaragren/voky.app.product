@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Voky.app.product.api/Voky.app.product.api.csproj" />
+  <Project Path="Voky.app.product.api.tests/Voky.app.product.api.tests.csproj" />
+</Solution>
