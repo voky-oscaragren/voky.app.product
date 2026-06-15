@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 using Voky.app.product.api.Data;
 using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.Services;
@@ -7,10 +6,18 @@ using Voky.app.product.api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("VokyProductDb"));
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+}
 
 builder.Services.AddScoped<DbProductService>();
 builder.Services.AddScoped<DbMainSupplierService>();
@@ -36,8 +43,8 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
