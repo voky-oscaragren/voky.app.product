@@ -8,7 +8,8 @@ public class PriceMatrix
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public Guid ProductId { get; set; }
+    [MaxLength(50)]
+    public string ProductNr { get; set; } = string.Empty;
     public Product Product { get; set; } = null!;
 
     public int SupplierCurrencyId { get; set; }

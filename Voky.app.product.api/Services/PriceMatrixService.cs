@@ -16,7 +16,7 @@ public class PriceMatrixService(DbPriceMatrixService dbPriceMatrixService)
     {
         var priceMatrix = new PriceMatrix
         {
-            ProductId = dto.ProductId,
+            ProductNr = dto.ProductNr,
             SupplierCurrencyId = dto.SupplierCurrencyId,
             CurrencyEndPriceId = dto.CurrencyEndPriceId,
             EndCustPrice = dto.EndCustPrice,

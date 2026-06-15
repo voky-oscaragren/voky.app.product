@@ -18,12 +18,12 @@ public class ProductsController(ProductService productService) : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{productNr}")]
     [ProducesResponseType<Product>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(string productNr)
     {
-        var product = await productService.GetByIdAsync(id);
+        var product = await productService.GetByIdAsync(productNr);
         return product is null ? NotFound() : Ok(product);
     }
 
@@ -33,25 +33,25 @@ public class ProductsController(ProductService productService) : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
     {
         var product = await productService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+        return CreatedAtAction(nameof(GetById), new { productNr = product.ProductNr }, product);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{productNr}")]
     [ProducesResponseType<Product>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
+    public async Task<IActionResult> Update(string productNr, [FromBody] UpdateProductDto dto)
     {
-        var product = await productService.UpdateAsync(id, dto);
+        var product = await productService.UpdateAsync(productNr, dto);
         return product is null ? NotFound() : Ok(product);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{productNr}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(string productNr)
     {
-        var deleted = await productService.DeleteAsync(id);
+        var deleted = await productService.DeleteAsync(productNr);
         return deleted ? NoContent() : NotFound();
     }
 }

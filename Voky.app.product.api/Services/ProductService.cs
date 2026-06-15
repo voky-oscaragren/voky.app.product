@@ -9,36 +9,49 @@ public class ProductService(DbProductService dbProductService)
     public async Task<IEnumerable<Product>> GetAllAsync() =>
         await dbProductService.GetAllAsync();
 
-    public async Task<Product?> GetByIdAsync(Guid id) =>
-        await dbProductService.GetByIdAsync(id);
+    public async Task<Product?> GetByIdAsync(string productNr) =>
+        await dbProductService.GetByIdAsync(productNr);
 
     public async Task<Product> CreateAsync(CreateProductDto dto)
     {
         var product = new Product
         {
+            ProductNr = dto.ProductNr,
             Name = dto.Name,
+            LevArtNrName = dto.LevArtNrName,
+            ArtNrVarianthead = dto.ArtNrVarianthead,
             Description = dto.Description,
-            Price = dto.Price,
-            Stock = dto.Stock,
+            SendToOpti = dto.SendToOpti,
+            ArtNrStartCost = dto.ArtNrStartCost,
+            StartCostAmount = dto.StartCostAmount,
+            MainSupplierId = dto.MainSupplierId,
+            LifecycleId = dto.LifecycleId,
+            QuestionGroupId = dto.QuestionGroupId,
         };
 
         return await dbProductService.CreateAsync(product);
     }
 
-    public async Task<Product?> UpdateAsync(Guid id, UpdateProductDto dto)
+    public async Task<Product?> UpdateAsync(string productNr, UpdateProductDto dto)
     {
         var product = new Product
         {
-            Id = id,
+            ProductNr = productNr,
             Name = dto.Name,
+            LevArtNrName = dto.LevArtNrName,
+            ArtNrVarianthead = dto.ArtNrVarianthead,
             Description = dto.Description,
-            Price = dto.Price,
-            Stock = dto.Stock,
+            SendToOpti = dto.SendToOpti,
+            ArtNrStartCost = dto.ArtNrStartCost,
+            StartCostAmount = dto.StartCostAmount,
+            MainSupplierId = dto.MainSupplierId,
+            LifecycleId = dto.LifecycleId,
+            QuestionGroupId = dto.QuestionGroupId,
         };
 
         return await dbProductService.UpdateAsync(product);
     }
 
-    public async Task<bool> DeleteAsync(Guid id) =>
-        await dbProductService.DeleteAsync(id);
+    public async Task<bool> DeleteAsync(string productNr) =>
+        await dbProductService.DeleteAsync(productNr);
 }
