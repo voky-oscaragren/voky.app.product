@@ -18,10 +18,10 @@ public class MainSuppliersController(MainSupplierService mainSupplierService) : 
         return Ok(suppliers);
     }
 
-    [HttpGet("{supplierNr}")]
+    [HttpGet("{supplierNr:int}")]
     [ProducesResponseType<MainSupplier>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(string supplierNr)
+    public async Task<IActionResult> GetById(int supplierNr)
     {
         var supplier = await mainSupplierService.GetByIdAsync(supplierNr);
         return supplier is null ? NotFound() : Ok(supplier);

@@ -4,8 +4,8 @@ namespace Voky.app.product.api.Models;
 
 public class MainSupplier
 {
-    [Key, MaxLength(50)]
-    public string SupplierNr { get; set; } = string.Empty;
+    [Key]
+    public int SupplierNr { get; set; }
 
     [Required, MaxLength(200)]
     public string Name { get; set; } = string.Empty;

@@ -11,7 +11,7 @@ public record CreateProductDto(
     bool SendToOpti,
     [MaxLength(50)] string? ArtNrStartCost,
     [Range(0, double.MaxValue)] decimal? StartCostAmount,
-    [MaxLength(50)] string? MainSupplierNr,
+    int? MainSupplierNr,
     int? LifecycleId,
     int? QuestionGroupId
 );

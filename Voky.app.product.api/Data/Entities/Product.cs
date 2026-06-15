@@ -28,8 +28,7 @@ public class Product
     [Column(TypeName = "decimal(18,2)")]
     public decimal? StartCostAmount { get; set; }
 
-    [MaxLength(50)]
-    public string? MainSupplierNr { get; set; }
+    public int? MainSupplierNr { get; set; }
     public MainSupplier? MainSupplier { get; set; }
 
     public int? LifecycleId { get; set; }
