@@ -1,0 +1,6 @@
+@Voky.app.product.api_HostAddress = http://localhost:5246
+
+GET {{Voky.app.product.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
