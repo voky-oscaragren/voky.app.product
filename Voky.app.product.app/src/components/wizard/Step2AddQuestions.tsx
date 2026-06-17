@@ -17,6 +17,11 @@ export default function Step2AddQuestions({ data, onChange }: Props) {
     onChange('questions', [...data.questions, text.trim()]);
   };
 
+  const addQuestionGroup = (text: string) => {
+    if (!text.trim()) return;
+    onChange('questionGroup', text);
+  };
+
   const removeQuestion = (index: number) => {
     onChange('questions', data.questions.filter((_, i) => i !== index));
   };
@@ -73,10 +78,10 @@ export default function Step2AddQuestions({ data, onChange }: Props) {
             />
             <button
               type="button"
-              onClick={() => { addQuestion(newGroup); setNewGroup(''); }}
+              onClick={() => { addQuestionGroup(newGroup); setNewGroup(''); }}
               className="border border-green-500 text-green-400 hover:bg-green-500/10 px-4 py-2 rounded-lg transition-colors text-sm font-medium w-fit mt-1"
             >
-              Add question
+              Add question group
             </button>
           </div>
         </div>

@@ -2,11 +2,14 @@ import FormInput from '../ui/FormInput';
 import FormTextarea from '../ui/FormTextarea';
 import FormSelect from '../ui/FormSelect';
 import SearchDropdown from '../ui/SearchDropdown';
-import { ProductFormData } from '../../types/product';
+import { ProductFormData, ProductVariant, getVariantProductNumber } from '../../types/product';
+import { suppliers } from '../../types/supplier';
 
 interface Props {
   data: ProductFormData;
   onChange: (field: keyof ProductFormData, value: ProductFormData[keyof ProductFormData]) => void;
+  variants: ProductVariant[];
+  onVariantsChange: (variants: ProductVariant[]) => void;
 }
 
 const lifecycleOptions = [
@@ -15,16 +18,31 @@ const lifecycleOptions = [
   { value: 'In Development', label: 'In Development' },
 ];
 
-export default function Step1ProductDetails({ data, onChange }: Props) {
+export default function Step1ProductDetails({ data, onChange, variants, onVariantsChange }: Props) {
+  const handleVariantCount = (newCount: number) => {
+    const count = Math.max(1, newCount)
+    if (count > variants.length) {
+      const toAdd = Array.from({ length: count - variants.length }, (_, i) => ({
+        variantHead: data.productNumber,
+        productNumber: getVariantProductNumber(data.productNumber, variants.length + i),
+        name: '',
+        antalStaflingar: '',
+        moqPricing: [],
+      }))
+      onVariantsChange([...variants, ...toAdd])
+    } else {
+      onVariantsChange(variants.slice(0, count))
+    }
+  }
+
+  const updateVariant = (index: number, field: keyof ProductVariant, value: string) => {
+    const updated = variants.map((v, i) => i === index ? { ...v, [field]: value } : v)
+    onVariantsChange(updated)
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <div className="grid grid-cols-2 gap-5">
-        <FormInput
-          label="Product number"
-          value={data.productNumber}
-          onChange={(v) => onChange('productNumber', v)}
-          placeholder="Enter product number"
-        />
         <FormInput
           label="Name"
           value={data.name}
@@ -33,20 +51,12 @@ export default function Step1ProductDetails({ data, onChange }: Props) {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
-        <FormInput
-          label="Supplier art. nr / name"
-          value={data.supplierArtNr}
-          onChange={(v) => onChange('supplierArtNr', v)}
-          placeholder="Supplier details"
-        />
-        <FormInput
-          label="Art. nr varianthead"
-          value={data.artNrVarianthead}
-          onChange={(v) => onChange('artNrVarianthead', v)}
-          placeholder="Variant head number"
-        />
-      </div>
+      <FormInput
+        label="Supplier art. nr / name"
+        value={data.supplierArtNr}
+        onChange={(v) => onChange('supplierArtNr', v)}
+        placeholder="Product name for supplier"
+      />
 
       <div className="grid grid-cols-2 gap-5">
         <SearchDropdown
@@ -54,12 +64,17 @@ export default function Step1ProductDetails({ data, onChange }: Props) {
           value={data.headSupplier}
           onChange={(v) => onChange('headSupplier', v)}
           placeholder="Search supplier"
+          options={suppliers.map(s => ({
+            value: s.supplierNr,
+            label: s.supplierName,
+            sublabel: s.supplierCurrency,
+          }))}
         />
         <FormInput
           label="Art. nr start cost"
           value={data.artNrStartCost}
           onChange={(v) => onChange('artNrStartCost', v)}
-          placeholder="Start cost"
+          placeholder="Art.nr for startcost"
         />
       </div>
 
@@ -88,8 +103,8 @@ export default function Step1ProductDetails({ data, onChange }: Props) {
         rows={4}
       />
 
-      <div className="flex items-end gap-6">
-        <div className="w-48">
+      <div className="flex justify-between items-center gap-5">
+        <div className="flex-1">
           <FormInput
             label="MOQ Customer"
             value={data.moqCustomer}
@@ -99,49 +114,57 @@ export default function Step1ProductDetails({ data, onChange }: Props) {
           />
         </div>
 
-        <div className="flex flex-col mb-0.5">
-          <span className="text-white text-sm font-medium mb-2 block">Send to opti</span>
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 text-white cursor-pointer text-sm">
-              <span
-                onClick={() => onChange('sendToOpti', true)}
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors ${
-                  data.sendToOpti
-                    ? 'bg-green-500 border-green-500'
-                    : 'border-wizard-muted bg-transparent'
-                }`}
-              >
-                {data.sendToOpti && (
-                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                    <path d="M1 4l2.5 2.5L9 1" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
-              </span>
-              Yes
-            </label>
-            <label className="flex items-center gap-2 text-white cursor-pointer text-sm">
-              <span
-                onClick={() => onChange('sendToOpti', false)}
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors ${
-                  !data.sendToOpti
-                    ? 'border-white'
-                    : 'border-wizard-muted bg-transparent'
-                }`}
-              />
-              No
-            </label>
-          </div>
+        <div className="flex-1">
+          <FormInput
+            label="Antal stafflingar"
+            value={data.antalStaflingar}
+            onChange={(v) => onChange('antalStaflingar', v)}
+            placeholder="0"
+            type="number"
+          />
         </div>
 
-        <div className="ml-auto mb-0.5">
-          <button
-            type="button"
-            className="border border-green-500 text-green-400 hover:bg-green-500/10 px-4 py-2 rounded-lg transition-colors text-sm font-medium"
-          >
-            Add Child
-          </button>
+        <div className="flex-1">
+          <FormInput
+            label="Variants"
+            value={String(variants.length)}
+            onChange={(v) => handleVariantCount(parseInt(v, 10) || 1)}
+            placeholder="1"
+            type="number"
+          />
         </div>
       </div>
+
+      {variants.length > 0 && (
+        <div className="flex flex-col gap-2 mt-1">
+          <div className="grid grid-cols-3 gap-3 px-1">
+            <span className="text-wizard-muted text-xs uppercase tracking-wider">Product number</span>
+            <span className="text-wizard-muted text-xs uppercase tracking-wider">Product name</span>
+            <span className="text-wizard-muted text-xs uppercase tracking-wider">Antal stafflingar</span>
+          </div>
+          {variants.map((variant, i) => (
+            <div key={i} className="grid grid-cols-3 gap-3 bg-wizard-input/30 border border-wizard-border rounded-lg px-3 py-2.5">
+              <div className="flex items-center">
+                <span className="text-white text-sm">{variant.productNumber}</span>
+              </div>
+              <input
+                type="text"
+                value={variant.name}
+                onChange={(e) => updateVariant(i, 'name', e.target.value)}
+                placeholder="Product name"
+                className="bg-wizard-input border border-wizard-border rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-green-500 transition-colors placeholder:text-wizard-muted"
+              />
+              <input
+                type="number"
+                value={variant.antalStaflingar}
+                onChange={(e) => updateVariant(i, 'antalStaflingar', e.target.value)}
+                placeholder="0"
+                className="bg-wizard-input border border-wizard-border rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-green-500 transition-colors placeholder:text-wizard-muted"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

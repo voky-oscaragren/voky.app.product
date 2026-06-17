@@ -22,27 +22,6 @@ export default function Step4Specifications({ data, onChange }: Props) {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Auto-filled summary */}
-      <div className="flex flex-wrap gap-4 pb-4 border-b border-wizard-border">
-        <div className="flex flex-col">
-          <span className="text-wizard-muted text-xs mb-1">Product number</span>
-          <div className="flex items-center">
-            <span className="bg-wizard-input border border-wizard-border rounded px-3 py-1.5 text-white text-sm">
-              {data.productNumber || 'PROD-84920-X'}
-            </span>
-            <AutoFilledBadge />
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-wizard-muted text-xs mb-1">Name</span>
-          <div className="flex items-center">
-            <span className="bg-wizard-input border border-wizard-border rounded px-3 py-1.5 text-white text-sm">
-              {data.name || 'Ergonomic Office Chair v4'}
-            </span>
-            <AutoFilledBadge />
-          </div>
-        </div>
-      </div>
 
       <FormInput
         label="Brand"

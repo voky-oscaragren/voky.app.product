@@ -1,7 +1,8 @@
-import { ProductFormData } from '../../types/product';
+import { ProductFormData, ProductVariant } from '../../types/product';
 
 interface Props {
   data: ProductFormData;
+  variants: ProductVariant[];
 }
 
 function KVRow({ label, value }: { label: string; value: string }) {
@@ -21,7 +22,7 @@ function Chip({ label }: { label: string }) {
   );
 }
 
-export default function Step5Overview({ data }: Props) {
+export default function Step5Overview({ data, variants }: Props) {
   return (
     <div className="flex flex-col">
       {/* Product Details */}
@@ -31,20 +32,63 @@ export default function Step5Overview({ data }: Props) {
           <KVRow label="Product number" value={data.productNumber} />
           <KVRow label="Name" value={data.name} />
           <KVRow label="Supplier art. nr / name" value={data.supplierArtNr} />
-          <KVRow label="Art. nr Varianthead" value={data.artNrVarianthead} />
           <KVRow label="Head supplier" value={data.headSupplier} />
           <KVRow label="Art. nr start cost" value={data.artNrStartCost} />
           <KVRow label="Amount start cost" value={data.amountStartCost} />
           <KVRow label="Lifecycle" value={data.lifecycle} />
           <KVRow label="Product description" value={data.productDescription} />
           <KVRow label="MOQ Customer" value={data.moqCustomer} />
+          <KVRow label="Antal stafflingar" value={data.antalStaflingar} />
           <KVRow label="Send to opti" value={data.sendToOpti ? 'Yes' : 'No'} />
         </div>
       </section>
 
+      {/* Variants */}
+      {variants.length > 0 && (
+        <section className="border-t border-wizard-border pt-6 mt-6">
+          <h2 className="text-xl font-bold text-white mb-4">Variants ({variants.length})</h2>
+          <div className="flex flex-col gap-4">
+            {variants.map((v, i) => (
+              <div key={i} className="border border-wizard-border rounded-lg px-4 pb-3">
+                <div className="divide-y divide-wizard-border">
+                  <KVRow label="Product number" value={v.productNumber} />
+                  <KVRow label="Product name" value={v.name} />
+                  <KVRow label="Antal stafflingar" value={v.antalStaflingar} />
+                </div>
+                {v.moqPricing.length > 0 && (
+                  <div className="mt-3">
+                    <p className="text-wizard-muted text-xs uppercase tracking-wider mb-2">MOQ Pricing</p>
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-wizard-muted text-xs">
+                          <th className="text-left pb-1.5 font-medium">MOQ</th>
+                          <th className="text-left pb-1.5 font-medium">Freight</th>
+                          <th className="text-left pb-1.5 font-medium">End Price</th>
+                          <th className="text-left pb-1.5 font-medium">Net Price</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-wizard-border">
+                        {v.moqPricing.map((row, ri) => (
+                          <tr key={ri}>
+                            <td className="py-1.5 text-white">{row.moq}</td>
+                            <td className="py-1.5 text-white">{row.freight.toFixed(2)}</td>
+                            <td className="py-1.5 text-white">{row.endCustPrice.toFixed(2)}</td>
+                            <td className="py-1.5 text-white">{row.supplierNetPrice.toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Questions */}
       <section className="border-t border-wizard-border pt-6 mt-6">
-        <h2 className="text-xl font-bold text-white mb-4">Questions</h2>
+        <h2 className="text-xl font-bold text-white mb-4">Questions for {data.questionGroup}</h2>
         {data.questions.length === 0 ? (
           <p className="text-wizard-muted text-sm">No questions added.</p>
         ) : (
@@ -59,33 +103,10 @@ export default function Step5Overview({ data }: Props) {
       {/* Pricing */}
       <section className="border-t border-wizard-border pt-6 mt-6">
         <h2 className="text-xl font-bold text-white mb-4">Pricing</h2>
-        <div className="divide-y divide-wizard-border mb-4">
+        <div className="divide-y divide-wizard-border">
           <KVRow label="Currency end price" value={data.currencyEndPrice} />
           <KVRow label="Supplier currency" value={data.supplierCurrency} />
         </div>
-        {data.moqPricing.length > 0 && (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-wizard-muted uppercase text-xs">
-                <th className="text-left pb-2 font-medium">MOQ</th>
-                <th className="text-left pb-2 font-medium">End Price</th>
-                <th className="text-left pb-2 font-medium">Net Price</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-wizard-border">
-              {data.moqPricing.map((row, i) => (
-                <tr key={i}>
-                  <td className="py-2 text-white">{row.moq}</td>
-                  <td className="py-2 text-white">{row.endCustPrice.toFixed(2)}</td>
-                  <td className="py-2 text-white">{row.supplierNetPrice.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {data.moqPricing.length === 0 && (
-          <p className="text-wizard-muted text-sm">No MOQ pricing configured.</p>
-        )}
       </section>
 
       {/* Specifications */}

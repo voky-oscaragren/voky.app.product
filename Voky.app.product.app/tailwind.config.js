@@ -5,8 +5,8 @@ export default {
     extend: {
       colors: {
         wizard: {
-          bg: '#0d1a10',
-          card: '#122318',
+          bg: '#0F1A12',
+          card: '#10231C',
           input: '#0e1c13',
           border: '#1e3525',
           'border-focus': '#22c55e',

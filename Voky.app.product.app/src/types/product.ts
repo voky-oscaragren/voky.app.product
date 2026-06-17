@@ -1,5 +1,23 @@
+export interface ProductVariant {
+  variantHead: string;
+  productNumber: string;
+  name: string;
+  antalStaflingar: string;
+  moqPricing: MoqPricing[];
+}
+
+export function getVariantProductNumber(baseProductNumber: string, index: number): string {
+  const parts = baseProductNumber.split('-')
+  if (parts.length === 2) {
+    const num = parseInt(parts[1], 10)
+    if (!isNaN(num)) return `W-${num + index + 1}`
+  }
+  return `${baseProductNumber}-${index + 1}`
+}
+
 export interface MoqPricing {
   moq: number;
+  freight: number;
   endCustPrice: number;
   supplierNetPrice: number;
 }
@@ -9,22 +27,22 @@ export interface ProductFormData {
   productNumber: string;
   name: string;
   supplierArtNr: string;
-  artNrVarianthead: string;
   headSupplier: string;
   artNrStartCost: string;
   amountStartCost: string;
   lifecycle: string;
   productDescription: string;
   moqCustomer: string;
+  antalStaflingar: string;
   sendToOpti: boolean;
 
   // Step 2
   questions: string[];
+  questionGroup: string;
 
   // Step 3
   currencyEndPrice: string;
   supplierCurrency: string;
-  moqPricing: MoqPricing[];
 
   // Step 4
   brand: string;
@@ -41,18 +59,18 @@ export const initialFormData: ProductFormData = {
   productNumber: '',
   name: '',
   supplierArtNr: '',
-  artNrVarianthead: '',
   headSupplier: '',
   artNrStartCost: '',
   amountStartCost: '0',
   lifecycle: '',
   productDescription: '',
   moqCustomer: '0',
+  antalStaflingar: '0',
   sendToOpti: true,
   questions: [],
+  questionGroup: '',
   currencyEndPrice: '',
   supplierCurrency: '',
-  moqPricing: [],
   brand: '',
   deliveryInformation: '',
   delivTimeMin: '',

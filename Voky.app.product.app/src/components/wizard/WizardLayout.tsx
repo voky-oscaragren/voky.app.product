@@ -45,7 +45,10 @@ export default function WizardLayout({
       <div className="w-full max-w-3xl bg-wizard-card rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="px-8 pt-8 pb-6 border-b border-wizard-border">
-          <h1 className="text-2xl font-bold text-white">{title}</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-white">{title}</h1>
+            <img src="/Voky_green_png.avif" alt="Voky" className="h-8" />
+          </div>
           {!isConfirmation && (
             <p className="text-wizard-muted text-sm mt-1">
               Slide {step} of {totalSteps} &bull; {stepLabel}
