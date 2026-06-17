@@ -81,18 +81,38 @@ export default function Step3PricingMatrix({ data, onChange, variants, onVariant
     }));
   };
 
+  const handleAntalStaflingar = (value: string) => {
+    onChange('antalStaflingar', value);
+    const count = parseInt(value, 10);
+    if (isNaN(count) || count < 0) return;
+    onVariantsChange(variants.map(v => {
+      const current = v.moqPricing;
+      const updated = count > current.length
+        ? [...current, ...emptyRows(count - current.length)]
+        : current.slice(0, count);
+      return withMinMoq({ ...v, antalStaflingar: value, moqPricing: updated });
+    }));
+  };
+
   const selectedVariant = variants[selectedIndex];
   const rows = selectedVariant?.moqPricing ?? [];
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 gap-5">
         <SearchDropdown
           label="Currency end price"
           value={data.currencyEndPrice}
           onChange={(v) => onChange('currencyEndPrice', v)}
           placeholder="Search currency..."
           options={currencyOptions}
+        />
+        <FormInput
+          label="No. of Price levels/Qtys"
+          value={data.antalStaflingar}
+          onChange={handleAntalStaflingar}
+          placeholder="0"
+          type="number"
         />
         <FormInput
           label="Art. nr start cost"

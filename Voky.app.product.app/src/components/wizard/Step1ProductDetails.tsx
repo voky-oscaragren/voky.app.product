@@ -86,16 +86,6 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
 
         <div className="flex-1">
           <FormInput
-            label="No. of Price levels/Qtys"
-            value={data.antalStaflingar}
-            onChange={(v) => onChange('antalStaflingar', v)}
-            placeholder="0"
-            type="number"
-          />
-        </div>
-
-        <div className="flex-1">
-          <FormInput
             label="Variants"
             value={String(variants.length)}
             onChange={(v) => handleVariantCount(parseInt(v, 10) || 1)}
