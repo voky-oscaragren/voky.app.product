@@ -2,7 +2,9 @@ export interface ProductVariant {
   variantHead: string;
   productNumber: string;
   name: string;
+  supplierArtNr: string;
   antalStaflingar: string;
+  moqCustomer: string;
   moqPricing: MoqPricing[];
 }
 
@@ -18,6 +20,7 @@ export function getVariantProductNumber(baseProductNumber: string, index: number
 export interface MoqPricing {
   moq: number;
   freight: number;
+  freightType: string;
   endCustPrice: number;
   supplierNetPrice: number;
 }
@@ -30,7 +33,6 @@ export interface ProductFormData {
   headSupplier: string;
   artNrStartCost: string;
   amountStartCost: string;
-  lifecycle: string;
   productDescription: string;
   moqCustomer: string;
   antalStaflingar: string;
@@ -55,6 +57,11 @@ export interface ProductFormData {
   categories: string[];
 }
 
+export interface QueuedProduct {
+  formData: ProductFormData;
+  variants: ProductVariant[];
+}
+
 export const initialFormData: ProductFormData = {
   productNumber: '',
   name: '',
@@ -62,7 +69,6 @@ export const initialFormData: ProductFormData = {
   headSupplier: '',
   artNrStartCost: '',
   amountStartCost: '0',
-  lifecycle: '',
   productDescription: '',
   moqCustomer: '0',
   antalStaflingar: '0',

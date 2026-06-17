@@ -35,7 +35,6 @@ export default function Step5Overview({ data, variants }: Props) {
           <KVRow label="Head supplier" value={data.headSupplier} />
           <KVRow label="Art. nr start cost" value={data.artNrStartCost} />
           <KVRow label="Amount start cost" value={data.amountStartCost} />
-          <KVRow label="Lifecycle" value={data.lifecycle} />
           <KVRow label="Product description" value={data.productDescription} />
           <KVRow label="MOQ Customer" value={data.moqCustomer} />
           <KVRow label="Antal stafflingar" value={data.antalStaflingar} />
@@ -53,7 +52,8 @@ export default function Step5Overview({ data, variants }: Props) {
                 <div className="divide-y divide-wizard-border">
                   <KVRow label="Product number" value={v.productNumber} />
                   <KVRow label="Product name" value={v.name} />
-                  <KVRow label="Antal stafflingar" value={v.antalStaflingar} />
+                  <KVRow label="Supplier art. nr / name" value={v.supplierArtNr} />
+                  <KVRow label="MOQ customer" value={v.moqCustomer} />
                 </div>
                 {v.moqPricing.length > 0 && (
                   <div className="mt-3">
@@ -63,6 +63,7 @@ export default function Step5Overview({ data, variants }: Props) {
                         <tr className="text-wizard-muted text-xs">
                           <th className="text-left pb-1.5 font-medium">MOQ</th>
                           <th className="text-left pb-1.5 font-medium">Freight</th>
+                          <th className="text-left pb-1.5 font-medium">Type</th>
                           <th className="text-left pb-1.5 font-medium">End Price</th>
                           <th className="text-left pb-1.5 font-medium">Net Price</th>
                         </tr>
@@ -72,6 +73,7 @@ export default function Step5Overview({ data, variants }: Props) {
                           <tr key={ri}>
                             <td className="py-1.5 text-white">{row.moq}</td>
                             <td className="py-1.5 text-white">{row.freight.toFixed(2)}</td>
+                            <td className="py-1.5 text-white">{row.freightType || '—'}</td>
                             <td className="py-1.5 text-white">{row.endCustPrice.toFixed(2)}</td>
                             <td className="py-1.5 text-white">{row.supplierNetPrice.toFixed(2)}</td>
                           </tr>

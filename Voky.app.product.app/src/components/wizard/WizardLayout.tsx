@@ -81,7 +81,7 @@ export default function WizardLayout({
 
         {/* Footer */}
         <div className="px-8 py-5 border-t border-wizard-border flex justify-between items-center">
-          <div>
+          <div className="flex items-center gap-4">
             {onCancel && (
               <button
                 onClick={onCancel}

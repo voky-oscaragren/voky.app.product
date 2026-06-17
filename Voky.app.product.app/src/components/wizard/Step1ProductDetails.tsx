@@ -1,6 +1,5 @@
 import FormInput from '../ui/FormInput';
 import FormTextarea from '../ui/FormTextarea';
-import FormSelect from '../ui/FormSelect';
 import SearchDropdown from '../ui/SearchDropdown';
 import { ProductFormData, ProductVariant, getVariantProductNumber } from '../../types/product';
 import { suppliers } from '../../types/supplier';
@@ -12,12 +11,6 @@ interface Props {
   onVariantsChange: (variants: ProductVariant[]) => void;
 }
 
-const lifecycleOptions = [
-  { value: 'Active / In Production', label: 'Active / In Production' },
-  { value: 'Discontinued', label: 'Discontinued' },
-  { value: 'In Development', label: 'In Development' },
-];
-
 export default function Step1ProductDetails({ data, onChange, variants, onVariantsChange }: Props) {
   const handleVariantCount = (newCount: number) => {
     const count = Math.max(1, newCount)
@@ -26,7 +19,9 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
         variantHead: data.productNumber,
         productNumber: getVariantProductNumber(data.productNumber, variants.length + i),
         name: '',
-        antalStaflingar: '',
+        supplierArtNr: '',
+        antalStaflingar: data.antalStaflingar,
+        moqCustomer: '',
         moqPricing: [],
       }))
       onVariantsChange([...variants, ...toAdd])
@@ -52,48 +47,23 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
       </div>
 
       <FormInput
-        label="Supplier art. nr / name"
+        label="Supplier Art.Nr/Name"
         value={data.supplierArtNr}
         onChange={(v) => onChange('supplierArtNr', v)}
         placeholder="Product name for supplier"
       />
 
-      <div className="grid grid-cols-2 gap-5">
-        <SearchDropdown
-          label="Head supplier"
-          value={data.headSupplier}
-          onChange={(v) => onChange('headSupplier', v)}
-          placeholder="Search supplier"
-          options={suppliers.map(s => ({
-            value: s.supplierNr,
-            label: s.supplierName,
-            sublabel: s.supplierCurrency,
-          }))}
-        />
-        <FormInput
-          label="Art. nr start cost"
-          value={data.artNrStartCost}
-          onChange={(v) => onChange('artNrStartCost', v)}
-          placeholder="Art.nr for startcost"
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-5">
-        <FormInput
-          label="Amount start cost"
-          value={data.amountStartCost}
-          onChange={(v) => onChange('amountStartCost', v)}
-          placeholder="0"
-          type="number"
-        />
-        <FormSelect
-          label="Lifecycle"
-          value={data.lifecycle}
-          onChange={(v) => onChange('lifecycle', v)}
-          options={lifecycleOptions}
-          placeholder="Select lifecycle"
-        />
-      </div>
+      <SearchDropdown
+        label="Head supplier"
+        value={data.headSupplier}
+        onChange={(v) => onChange('headSupplier', v)}
+        placeholder="Search supplier"
+        options={suppliers.map(s => ({
+          value: s.supplierNr,
+          label: s.supplierName,
+          sublabel: s.supplierCurrency,
+        }))}
+      />
 
       <FormTextarea
         label="Product description"
@@ -116,7 +86,7 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
 
         <div className="flex-1">
           <FormInput
-            label="Antal stafflingar"
+            label="No. of Price levels/Qtys"
             value={data.antalStaflingar}
             onChange={(v) => onChange('antalStaflingar', v)}
             placeholder="0"
@@ -140,7 +110,7 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
           <div className="grid grid-cols-3 gap-3 px-1">
             <span className="text-wizard-muted text-xs uppercase tracking-wider">Product number</span>
             <span className="text-wizard-muted text-xs uppercase tracking-wider">Product name</span>
-            <span className="text-wizard-muted text-xs uppercase tracking-wider">Antal stafflingar</span>
+            <span className="text-wizard-muted text-xs uppercase tracking-wider">Supplier Art.Nr/name </span>
           </div>
           {variants.map((variant, i) => (
             <div key={i} className="grid grid-cols-3 gap-3 bg-wizard-input/30 border border-wizard-border rounded-lg px-3 py-2.5">
@@ -155,10 +125,10 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
                 className="bg-wizard-input border border-wizard-border rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-green-500 transition-colors placeholder:text-wizard-muted"
               />
               <input
-                type="number"
-                value={variant.antalStaflingar}
-                onChange={(e) => updateVariant(i, 'antalStaflingar', e.target.value)}
-                placeholder="0"
+                type="text"
+                value={variant.supplierArtNr}
+                onChange={(e) => updateVariant(i, 'supplierArtNr', e.target.value)}
+                placeholder="Supplier Art.Nr/Name"
                 className="bg-wizard-input border border-wizard-border rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-green-500 transition-colors placeholder:text-wizard-muted"
               />
             </div>
