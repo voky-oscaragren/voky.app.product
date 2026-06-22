@@ -41,8 +41,8 @@ export default function WizardLayout({
   const handleAction = onSave ?? onNext;
 
   return (
-    <div className="min-h-screen bg-wizard-bg p-6 flex items-center justify-center">
-      <div className="w-full max-w-3xl bg-wizard-card rounded-2xl overflow-hidden">
+    <div className="min-h-screen bg-wizard-bg p-6">
+      <div className="w-full bg-wizard-card rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="px-8 pt-8 pb-6 border-b border-wizard-border">
           <div className="flex justify-between items-center">

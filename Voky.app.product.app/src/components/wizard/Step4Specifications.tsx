@@ -57,18 +57,34 @@ export default function Step4Specifications({ data, onChange }: Props) {
         />
       </div>
 
-      <FormInput
-        label="Size info"
-        value={data.sizeInfo}
-        onChange={(v) => onChange('sizeInfo', v)}
-        placeholder="Standard H: 110cm, W: 65cm, D: 60cm"
-      />
+      <div className="grid grid-cols-2 gap-5">
+        <FormInput
+          label="Size info"
+          value={data.sizeInfo}
+          onChange={(v) => onChange('sizeInfo', v)}
+          placeholder="Standard H: 110cm, W: 65cm, D: 60cm"
+        />
+        <FormInput
+          label="Printing size"
+          value={data.printingSize}
+          onChange={(v) => onChange('printingSize', v)}
+          placeholder="e.g. 90 x 50 mm"
+        />
+      </div>
 
       <FormTextarea
         label="Material info"
         value={data.materialInfo}
         onChange={(v) => onChange('materialInfo', v)}
         placeholder="Describe material..."
+        rows={3}
+      />
+
+      <FormTextarea
+        label="Additional information"
+        value={data.additionalInformation}
+        onChange={(v) => onChange('additionalInformation', v)}
+        placeholder="Any additional notes..."
         rows={3}
       />
 

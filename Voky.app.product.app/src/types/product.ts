@@ -25,6 +25,35 @@ export interface MoqPricing {
   supplierNetPrice: number;
 }
 
+export type QuestionType = 'dropdown-no-repeat' | 'free-text-40' | 'dropdown-repeat';
+
+export const QUESTION_TYPES: { value: QuestionType; label: string }[] = [
+  { value: 'dropdown-no-repeat', label: 'Dropdown (no image + no repeat)' },
+  { value: 'free-text-40', label: 'Free text max 40 characters' },
+  { value: 'dropdown-repeat', label: 'Dropdown (No image - repeat)' },
+];
+
+export interface QuestionAddon {
+  addonName: string | null; // null = custom (not from supplier addon list)
+  answerName: string;
+  answerNameEn: string;
+}
+
+export interface GroupQuestion {
+  id: string;
+  text: string;
+  textEn: string;
+  type: QuestionType;
+  mandatory: boolean;
+  nextQuestion: string; // ID of next question to show, empty = none
+  addons: QuestionAddon[];
+}
+
+export interface QuestionGroup {
+  name: string;
+  questions: GroupQuestion[];
+}
+
 export interface ProductFormData {
   // Step 1
   productNumber: string;
@@ -38,9 +67,10 @@ export interface ProductFormData {
   antalStaflingar: string;
   sendToOpti: boolean;
 
+  isAddon: boolean;
+
   // Step 2
-  questions: string[];
-  questionGroup: string;
+  questionGroup: QuestionGroup | null;
 
   // Step 3
   currencyEndPrice: string;
@@ -53,6 +83,8 @@ export interface ProductFormData {
   delivTimeMax: string;
   sizeInfo: string;
   materialInfo: string;
+  printingSize: string;
+  additionalInformation: string;
   tags: string[];
   categories: string[];
 }
@@ -73,8 +105,8 @@ export const initialFormData: ProductFormData = {
   moqCustomer: '0',
   antalStaflingar: '0',
   sendToOpti: true,
-  questions: [],
-  questionGroup: '',
+  isAddon: false,
+  questionGroup: null,
   currencyEndPrice: '',
   supplierCurrency: '',
   brand: '',
@@ -83,6 +115,8 @@ export const initialFormData: ProductFormData = {
   delivTimeMax: '',
   sizeInfo: '',
   materialInfo: '',
+  printingSize: '',
+  additionalInformation: '',
   tags: [],
   categories: [],
 };

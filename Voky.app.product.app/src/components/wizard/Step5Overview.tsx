@@ -90,13 +90,24 @@ export default function Step5Overview({ data, variants }: Props) {
 
       {/* Questions */}
       <section className="border-t border-wizard-border pt-6 mt-6">
-        <h2 className="text-xl font-bold text-white mb-4">Questions for {data.questionGroup}</h2>
-        {data.questions.length === 0 ? (
+        <h2 className="text-xl font-bold text-white mb-4">
+          Question Group{data.questionGroup ? ` — ${data.questionGroup.name}` : ''}
+        </h2>
+        {!data.questionGroup || data.questionGroup.questions.length === 0 ? (
           <p className="text-wizard-muted text-sm">No questions added.</p>
         ) : (
-          <div className="flex flex-wrap gap-2">
-            {data.questions.map((q, i) => (
-              <Chip key={i} label={q} />
+          <div className="flex flex-col gap-3">
+            {data.questionGroup.questions.map((q, i) => (
+              <div key={i} className="border border-wizard-border rounded-lg px-4 py-3 flex flex-col gap-2">
+                <span className="text-white text-sm font-medium">{q.text}</span>
+                {q.addons.length > 0 ? (
+                  <div className="flex flex-wrap gap-1.5">
+                    {q.addons.map((a, ai) => <Chip key={a.addonName ?? `custom-${ai}`} label={a.answerName} />)}
+                  </div>
+                ) : (
+                  <span className="text-wizard-muted text-xs">No addons</span>
+                )}
+              </div>
             ))}
           </div>
         )}

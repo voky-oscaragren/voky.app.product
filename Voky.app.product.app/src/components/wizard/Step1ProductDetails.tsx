@@ -44,6 +44,33 @@ export default function Step1ProductDetails({ data, onChange, variants, onVarian
           onChange={(v) => onChange('name', v)}
           placeholder="Product name"
         />
+        <div className="flex flex-col gap-1.5">
+          <label className="text-white text-sm font-medium">Is addon</label>
+          <div className="flex rounded-lg overflow-hidden border border-wizard-border w-fit">
+            <button
+              type="button"
+              onClick={() => onChange('isAddon', true)}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
+                data.isAddon
+                  ? 'bg-green-500/20 text-green-400 border-r border-green-500/40'
+                  : 'text-wizard-muted hover:text-white border-r border-wizard-border'
+              }`}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange('isAddon', false)}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
+                !data.isAddon
+                  ? 'bg-green-500/20 text-green-400'
+                  : 'text-wizard-muted hover:text-white'
+              }`}
+            >
+              No
+            </button>
+          </div>
+        </div>
       </div>
 
       <FormInput

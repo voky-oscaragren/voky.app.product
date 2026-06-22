@@ -31,8 +31,13 @@ const TEST_QUEUE: QueuedProduct[] = [
       moqCustomer: '50',
       antalStaflingar: '3',
       sendToOpti: true,
-      questions: ['Can we add a logo?', 'What colours are available?'],
-      questionGroup: 'Bags',
+      questionGroup: {
+        name: 'Bags',
+        questions: [
+          { id: 'Q0001', text: 'Kan vi lägga till en logga?', textEn: 'Can we add a logo?', type: 'dropdown-no-repeat', mandatory: true, nextQuestion: 'Q0002', addons: [{ addonName: 'Laser engraving', answerName: 'Laser engraving', answerNameEn: 'Laser engraving' }, { addonName: 'Digital print', answerName: 'Digital print', answerNameEn: 'Digital print' }] },
+          { id: 'Q0002', text: 'Vilka färger finns?', textEn: 'What colours are available?', type: 'dropdown-no-repeat', mandatory: false, nextQuestion: '', addons: [] },
+        ],
+      },
       currencyEndPrice: 'SEK',
       supplierCurrency: 'EUR',
       brand: 'EcoLine',
@@ -179,7 +184,15 @@ export default function App() {
           onVariantsChange={setVariants}
         />
       )}
-      {step === 2 && <Step2AddQuestions data={formData} onChange={handleChange} />}
+      {step === 2 && (
+          <Step2AddQuestions
+            data={formData}
+            onChange={handleChange}
+            existingGroups={queue
+              .filter((_, i) => i !== editingIndex)
+              .flatMap(p => p.formData.questionGroup ? [p.formData.questionGroup] : [])}
+          />
+        )}
       {step === 3 && <Step3PricingMatrix data={formData} onChange={handleChange} variants={variants} onVariantsChange={setVariants} />}
       {step === 4 && <Step4Specifications data={formData} onChange={handleChange} />}
       {step === 5 && <Step5Overview data={formData} variants={variants} />}
