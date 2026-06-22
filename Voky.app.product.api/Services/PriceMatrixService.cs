@@ -8,6 +8,6 @@ public class PriceMatrixService(DbPriceMatrixService dbPriceMatrixService)
     public async Task<IEnumerable<PriceMatrix>> GetAllAsync() =>
         await dbPriceMatrixService.GetAllAsync();
 
-    public async Task<PriceMatrix?> GetByIdAsync(Guid id) =>
+    public async Task<PriceMatrix?> GetByIdAsync(int id) =>
         await dbPriceMatrixService.GetByIdAsync(id);
 }

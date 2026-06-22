@@ -17,10 +17,10 @@ public class QuestionTypesController(QuestionTypeService questionTypeService) : 
         return Ok(types);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType<QuestionType>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(int id)
     {
         var type = await questionTypeService.GetByIdAsync(id);
         return type is null ? NotFound() : Ok(type);

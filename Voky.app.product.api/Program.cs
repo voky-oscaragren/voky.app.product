@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.Integration.Order.Visma.Database;
 using Voky.app.product.api.Data;
 using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.Services;
@@ -28,6 +27,7 @@ builder.Services.AddScoped<DbQuestionChoiceService>();
 builder.Services.AddScoped<DbQuestionTypeService>();
 builder.Services.AddScoped<DbTagService>();
 builder.Services.AddScoped<DbCategoryService>();
+builder.Services.AddScoped<DbCurrencyService>();
 builder.Services.AddScoped<DbPriceMatrixService>();
 
 builder.Services.AddScoped<ProductService>();
@@ -38,6 +38,7 @@ builder.Services.AddScoped<QuestionChoiceService>();
 builder.Services.AddScoped<QuestionTypeService>();
 builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<CurrencyService>();
 builder.Services.AddScoped<PriceMatrixService>();
 
 var app = builder.Build();

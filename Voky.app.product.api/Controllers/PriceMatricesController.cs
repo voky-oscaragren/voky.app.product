@@ -17,10 +17,10 @@ public class PriceMatricesController(PriceMatrixService priceMatrixService) : Co
         return Ok(matrices);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType<PriceMatrix>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(int id)
     {
         var matrix = await priceMatrixService.GetByIdAsync(id);
         return matrix is null ? NotFound() : Ok(matrix);

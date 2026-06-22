@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 namespace Voky.app.product.api.DTOs;
 
 public record CreatePriceMatrixDto(
-    [Required, MaxLength(50)] string ProductNr,
-    int SupplierCurrencyId,
-    int CurrencyEndPriceId,
+    [Required, MaxLength(40)] string ProductNr,
+    int CurrencyNo,
     [Range(0, double.MaxValue)] decimal EndCustPrice,
-    [Range(0, int.MaxValue)] int? MOQ,
-    [Range(0, double.MaxValue)] decimal SupplierNetPrice
+    [Range(0, double.MaxValue)] decimal MOQ,
+    [Range(0, double.MaxValue)] decimal SupplierNetPrice,
+    int CurrenyNr
 );

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.Integration.Order.Visma.Database;
 using Voky.app.product.api.Data;
 
 namespace Voky.app.product.api.Data.Services;

@@ -1,25 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Voky.app.product.api.Data;
 
 public class Question
 {
     [Key]
+    [Column("DME_QId")]
     public int QuestionId { get; set; }
-
+    [Column("DME_QGId")]
     public int QuestionGroupId { get; set; }
-    public QuestionGroup QuestionGroup { get; set; } = null!;
 
-    [MaxLength(50)]
-    public string? QuestionTypeId { get; set; }
+    [Column("DME_QTId")]
+    public int? QuestionTypeId { get; set; }
 
-    public bool Mandatory { get; set; }
+    [Column("DME_QMan")]
+    public byte Mandatory { get; set; }
 
-    [Required, MaxLength(60)]
+    [Column("DME_QNm")]
+    [MaxLength(250)]
     public string NameSwedish { get; set; } = string.Empty;
 
-    [Required, MaxLength(60)]
+    [Column("DME_QNmEng")]
+    [MaxLength(250)]
     public string NameEnglish { get; set; } = string.Empty;
-
-    public ICollection<QuestionChoice> Choices { get; set; } = [];
 }

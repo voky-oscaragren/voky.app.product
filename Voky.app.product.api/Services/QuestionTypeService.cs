@@ -8,6 +8,6 @@ public class QuestionTypeService(DbQuestionTypeService dbQuestionTypeService)
     public async Task<IEnumerable<QuestionType>> GetAllAsync() =>
         await dbQuestionTypeService.GetAllAsync();
 
-    public async Task<QuestionType?> GetByIdAsync(string id) =>
+    public async Task<QuestionType?> GetByIdAsync(int id) =>
         await dbQuestionTypeService.GetByIdAsync(id);
 }

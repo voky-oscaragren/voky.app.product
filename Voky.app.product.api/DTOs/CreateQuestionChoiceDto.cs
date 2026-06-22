@@ -4,7 +4,7 @@ namespace Voky.app.product.api.DTOs;
 
 public record CreateQuestionChoiceDto(
     int QuestionId,
-    [Required, MaxLength(60)] string NameSwedish,
-    [Required, MaxLength(60)] string NameEnglish,
-    [MaxLength(50)] string? ProductNumber
+    [MaxLength(250)] string NameSwedish,
+    [MaxLength(250)] string NameEnglish,
+    [MaxLength(40)] string? ProductNumber
 );

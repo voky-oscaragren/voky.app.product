@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Voky.app.product.api.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Voky.app.product.api.Data;
 using Voky.app.product.api.Services;
 
@@ -25,14 +24,5 @@ public class MainSuppliersController(MainSupplierService mainSupplierService) : 
     {
         var supplier = await mainSupplierService.GetByIdAsync(supplierNr);
         return supplier is null ? NotFound() : Ok(supplier);
-    }
-
-    [HttpPost]
-    [ProducesResponseType<MainSupplier>(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create([FromBody] CreateMainSupplierDto dto)
-    {
-        var supplier = await mainSupplierService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { supplierNr = supplier.SupplierNr }, supplier);
     }
 }

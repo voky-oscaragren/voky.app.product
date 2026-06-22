@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Voky.app.product.api.Data;
 
 public class QuestionGroup
 {
     [Key]
+    [Column("DME_QGId")]
     public int QuestionGroupId { get; set; }
 
-    [Required, MaxLength(200)]
+    [Column("DME_QGNm")]
+    [MaxLength(250)]
     public string Name { get; set; } = string.Empty;
-
-    public ICollection<Question> Questions { get; set; } = [];
-    public ICollection<Product> Products { get; set; } = [];
 }

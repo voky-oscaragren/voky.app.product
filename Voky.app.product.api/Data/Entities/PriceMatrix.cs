@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Voky.app.product.api.Data;
@@ -6,23 +7,28 @@ namespace Voky.app.product.api.Data;
 public class PriceMatrix
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    [Column("LnNo")]
+    public int LineNo { get; set; }
 
-    [MaxLength(50), ForeignKey(nameof(Product))]
+    [Column("ProdNo")]
+    [MaxLength(40)]
     public string ProductNr { get; set; } = string.Empty;
-    public Product Product { get; set; } = null!;
+    
+    [Column("Cur")]
+    public int CurrencyNo { get; set; }
 
-    public int SupplierCurrencyId { get; set; }
-    public SupplierCurrency SupplierCurrency { get; set; } = null!;
-
-    public int CurrencyEndPriceId { get; set; }
-    public CurrencyEndPrice CurrencyEndPrice { get; set; } = null!;
-
-    [Column(TypeName = "decimal(18,2)")]
+    [Column("SalePr")]
+    [Precision(28, 6)]
     public decimal EndCustPrice { get; set; }
 
-    public int? MOQ { get; set; }
+    [Column("MinNo")]
+    [Precision(28, 6)]
+    public decimal MOQ { get; set; }
 
-    [Column(TypeName = "decimal(18,2)")]
+    [Column("CstPr")]
+    [Precision(28, 6)]
     public decimal SupplierNetPrice { get; set; }
+
+    [Column("CstCur")]
+    public int CurrenyNr { get; set; }
 }
