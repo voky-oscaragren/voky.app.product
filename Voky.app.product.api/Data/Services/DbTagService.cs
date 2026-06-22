@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+using Voky.Shared.Visma.Database;
 
 namespace Voky.app.product.api.Data.Services;
 
-public class DbTagService(VismaDbContext db)
+public class DbTagService(VokyDbContextFactory<VismaDbContext> contextFactory) : DbBaseService(contextFactory)
 {
-    public async Task<IEnumerable<Tag>> GetAllAsync() =>
-        await db.Tags.AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<Tag>> GetAllAsync()
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Tags.AsNoTracking().ToListAsync();
+    }
 
-    public async Task<Tag?> GetByIdAsync(int id) =>
-        await db.Tags.AsNoTracking().FirstOrDefaultAsync(t => t.TagId == id);
+    public async Task<Tag?> GetByIdAsync(int id)
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Tags.AsNoTracking().FirstOrDefaultAsync(t => t.TagId == id);
+    }
 }

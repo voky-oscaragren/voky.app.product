@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
 [Keyless]
-public class MainSupplier
+public class MainSupplier : VismaEntity
 {
     [Column("SupNo")]
     public int SupplierNr { get; set; }
@@ -16,7 +17,7 @@ public class MainSupplier
 
     [Column("Cur")]
     public int CurrencyNr { get; set; }
-    
+
     [Column("DME_CostPercent")]
     [Precision(28, 6)]
     public decimal CostPriceAddon { get; set; }

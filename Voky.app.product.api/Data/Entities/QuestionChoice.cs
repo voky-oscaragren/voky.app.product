@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
-public class QuestionChoice
+public class QuestionChoice : VismaEntity
 {
     [Key]
     [Column("DME_QCId")]
     public int QuestionChoiceId { get; set; }
-    
+
     [Column("DME_QId")]
     public int QuestionId { get; set; }
 

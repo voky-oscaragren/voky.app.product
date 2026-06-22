@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+using Voky.Shared.Visma.Database;
 
 namespace Voky.app.product.api.Data.Services;
 
-public class DbQuestionTypeService(VismaDbContext db)
+public class DbQuestionTypeService(VokyDbContextFactory<VismaDbContext> contextFactory) : DbBaseService(contextFactory)
 {
-    public async Task<IEnumerable<QuestionType>> GetAllAsync() =>
-        await db.QuestionTypes.AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<QuestionType>> GetAllAsync()
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.QuestionTypes.AsNoTracking().ToListAsync();
+    }
 
-    public async Task<QuestionType?> GetByIdAsync(int id) =>
-        await db.QuestionTypes.AsNoTracking().FirstOrDefaultAsync(t => t.QuestionTypeId == id);
+    public async Task<QuestionType?> GetByIdAsync(int id)
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.QuestionTypes.AsNoTracking().FirstOrDefaultAsync(t => t.QuestionTypeId == id);
+    }
 }

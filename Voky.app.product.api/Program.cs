@@ -1,23 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+﻿using Voky.app.product.api.Data;
 using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.Services;
+using Voky.Shared.Visma.Database.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<VismaDbContext>(options =>
-        options.UseInMemoryDatabase("VokyProductDb"));
-}
-else
-{
-    builder.Services.AddDbContext<VismaDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-}
+builder.Services.AddVismaDatabase<VismaDbContext>(builder.Configuration, options => new VismaDbContext(options));
 
 builder.Services.AddScoped<DbProductService>();
 builder.Services.AddScoped<DbMainSupplierService>();

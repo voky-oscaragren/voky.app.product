@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
-public class QuestionGroup
+public class QuestionGroup : VismaEntity
 {
     [Key]
     [Column("DME_QGId")]

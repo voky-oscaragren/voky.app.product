@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+using Voky.Shared.Visma.Database;
 
 namespace Voky.app.product.api.Data.Services;
 
-public class DbCategoryService(VismaDbContext db)
+public class DbCategoryService(VokyDbContextFactory<VismaDbContext> contextFactory) : DbBaseService(contextFactory)
 {
-    public async Task<IEnumerable<Category>> GetAllAsync() =>
-        await db.Categories.AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<Category>> GetAllAsync()
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Categories.AsNoTracking().ToListAsync();
+    }
 
-    public async Task<Category?> GetByIdAsync(int id) =>
-        await db.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.CategoryId == id);
+    public async Task<Category?> GetByIdAsync(int id)
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.CategoryId == id);
+    }
 }

@@ -1,13 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Data;
+using Voky.Shared.Visma.Database;
 
 namespace Voky.app.product.api.Data.Services;
 
-public class DbProductService(VismaDbContext db)
+public class DbProductService(VokyDbContextFactory<VismaDbContext> contextFactory) : DbBaseService(contextFactory)
 {
-    public async Task<IEnumerable<Product>> GetAllAsync() =>
-        await db.Products.AsNoTracking().ToListAsync();
+    public async Task<IEnumerable<Product>> GetAllAsync()
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Products.AsNoTracking().ToListAsync();
+    }
 
-    public async Task<Product?> GetByIdAsync(string productNr) =>
-        await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductNr == productNr);
+    public async Task<Product?> GetByIdAsync(string productNr)
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductNr == productNr);
+    }
 }
