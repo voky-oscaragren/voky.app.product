@@ -7,22 +7,22 @@ namespace Voky.app.product.api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class QuestionsController(QuestionService questionService) : ControllerBase
+public class CategoriesController(CategoryService categoryService) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType<IEnumerable<Question>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<IEnumerable<Category>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var questions = await questionService.GetAllAsync();
-        return Ok(questions);
+        var categories = await categoryService.GetAllAsync();
+        return Ok(categories);
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType<Question>(StatusCodes.Status200OK)]
+    [ProducesResponseType<Category>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(int id)
     {
-        var question = await questionService.GetByIdAsync(id);
-        return question is null ? NotFound() : Ok(question);
+        var category = await categoryService.GetByIdAsync(id);
+        return category is null ? NotFound() : Ok(category);
     }
 }

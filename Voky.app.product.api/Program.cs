@@ -1,4 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Voky.Integration.Order.Visma.Database;
 using Voky.app.product.api.Data;
 using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.Services;
@@ -10,33 +11,33 @@ builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddDbContext<AppDbContext>(options =>
+    builder.Services.AddDbContext<VismaDbContext>(options =>
         options.UseInMemoryDatabase("VokyProductDb"));
 }
 else
 {
-    builder.Services.AddDbContext<AppDbContext>(options =>
+    builder.Services.AddDbContext<VismaDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 }
 
 builder.Services.AddScoped<DbProductService>();
 builder.Services.AddScoped<DbMainSupplierService>();
-builder.Services.AddScoped<DbLifecycleService>();
-builder.Services.AddScoped<DbSupplierCurrencyService>();
-builder.Services.AddScoped<DbCurrencyEndPriceService>();
 builder.Services.AddScoped<DbQuestionGroupService>();
 builder.Services.AddScoped<DbQuestionService>();
 builder.Services.AddScoped<DbQuestionChoiceService>();
+builder.Services.AddScoped<DbQuestionTypeService>();
+builder.Services.AddScoped<DbTagService>();
+builder.Services.AddScoped<DbCategoryService>();
 builder.Services.AddScoped<DbPriceMatrixService>();
 
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MainSupplierService>();
-builder.Services.AddScoped<LifecycleService>();
-builder.Services.AddScoped<SupplierCurrencyService>();
-builder.Services.AddScoped<CurrencyEndPriceService>();
 builder.Services.AddScoped<QuestionGroupService>();
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<QuestionChoiceService>();
+builder.Services.AddScoped<QuestionTypeService>();
+builder.Services.AddScoped<TagService>();
+builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<PriceMatrixService>();
 
 var app = builder.Build();

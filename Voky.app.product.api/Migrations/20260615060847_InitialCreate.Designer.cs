@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Voky.app.product.api.Data;
+using Voky.Integration.Order.Visma.Database;
 
 #nullable disable
 
 namespace Voky.app.product.api.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(VismaDbContext))]
     [Migration("20260615060847_InitialCreate")]
     partial class InitialCreate
     {

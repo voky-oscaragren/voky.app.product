@@ -2,13 +2,11 @@
 
 namespace Voky.app.product.api.Data;
 
-public class Lifecycle
+public class Tag
 {
     [Key]
-    public int Id { get; set; }
+    public int TagId { get; set; }
 
-    [Required, MaxLength(100)]
+    [Required, MaxLength(200)]
     public string Name { get; set; } = string.Empty;
-
-    public ICollection<Product> Products { get; set; } = [];
 }

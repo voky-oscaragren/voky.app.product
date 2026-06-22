@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Voky.app.product.api.Data;
+using Voky.Integration.Order.Visma.Database;
 
 #nullable disable
 
 namespace Voky.app.product.api.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(VismaDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

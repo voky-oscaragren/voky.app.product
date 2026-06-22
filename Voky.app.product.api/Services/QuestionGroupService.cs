@@ -1,6 +1,6 @@
-using Voky.app.product.api.Data.Services;
+﻿using Voky.app.product.api.Data.Services;
 using Voky.app.product.api.DTOs;
-using Voky.app.product.api.Models;
+using Voky.app.product.api.Data;
 
 namespace Voky.app.product.api.Services;
 

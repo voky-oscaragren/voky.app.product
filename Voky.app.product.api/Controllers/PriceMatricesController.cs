@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using Voky.app.product.api.DTOs;
-using Voky.app.product.api.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Voky.app.product.api.Data;
 using Voky.app.product.api.Services;
 
 namespace Voky.app.product.api.Controllers;
@@ -14,8 +13,8 @@ public class PriceMatricesController(PriceMatrixService priceMatrixService) : Co
     [ProducesResponseType<IEnumerable<PriceMatrix>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var prices = await priceMatrixService.GetAllAsync();
-        return Ok(prices);
+        var matrices = await priceMatrixService.GetAllAsync();
+        return Ok(matrices);
     }
 
     [HttpGet("{id:guid}")]
@@ -23,16 +22,7 @@ public class PriceMatricesController(PriceMatrixService priceMatrixService) : Co
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var price = await priceMatrixService.GetByIdAsync(id);
-        return price is null ? NotFound() : Ok(price);
-    }
-
-    [HttpPost]
-    [ProducesResponseType<PriceMatrix>(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create([FromBody] CreatePriceMatrixDto dto)
-    {
-        var price = await priceMatrixService.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetById), new { id = price.Id }, price);
+        var matrix = await priceMatrixService.GetByIdAsync(id);
+        return matrix is null ? NotFound() : Ok(matrix);
     }
 }

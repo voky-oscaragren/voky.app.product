@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Voky.app.product.api.DTOs;
-using Voky.app.product.api.Models;
+using Voky.app.product.api.Data;
 using Voky.app.product.api.Services;
 
 namespace Voky.app.product.api.Controllers;

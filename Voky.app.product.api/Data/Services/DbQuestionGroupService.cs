@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using Voky.app.product.api.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Voky.Integration.Order.Visma.Database;
+using Voky.app.product.api.Data;
 
 namespace Voky.app.product.api.Data.Services;
 
-public class DbQuestionGroupService(AppDbContext db)
+public class DbQuestionGroupService(VismaDbContext db)
 {
     public async Task<IEnumerable<QuestionGroup>> GetAllAsync() =>
         await db.QuestionGroups.AsNoTracking().ToListAsync();

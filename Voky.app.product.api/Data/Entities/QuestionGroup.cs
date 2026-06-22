@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Voky.app.product.api.Models;
+namespace Voky.app.product.api.Data;
 
 public class QuestionGroup
 {
