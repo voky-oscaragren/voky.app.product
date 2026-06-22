@@ -26,4 +26,12 @@ public class ProductsController(ProductService productService) : ControllerBase
         var product = await productService.GetByIdAsync(productNr);
         return product is null ? NotFound() : Ok(product);
     }
+
+    [HttpGet("supplier/{supplierNr:int}")]
+    [ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetBySupplier([FromRoute] string tenantId, int supplierNr)
+    {
+        productService.UseTenant(tenantId);
+        return Ok(await productService.GetBySupplierAsync(supplierNr));
+    }
 }

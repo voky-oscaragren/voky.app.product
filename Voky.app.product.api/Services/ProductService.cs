@@ -12,4 +12,7 @@ public class ProductService(DbProductService dbProductService)
 
     public async Task<Product?> GetByIdAsync(string productNr) =>
         await dbProductService.GetByIdAsync(productNr);
+
+    public async Task<IEnumerable<Product>> GetBySupplierAsync(int supplierNr) =>
+        await dbProductService.GetBySupplierAsync(supplierNr);
 }

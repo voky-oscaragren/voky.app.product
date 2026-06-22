@@ -18,4 +18,15 @@ public class DbProductService(VokyDbContextFactory<VismaDbContext> contextFactor
         await using var dbContext = _contextFactory.Create(_tenantId!);
         return await dbContext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductNr == productNr);
     }
+
+    public async Task<IEnumerable<Product>> GetBySupplierAsync(int supplierNr)
+    {
+        CheckTenant();
+        await using var dbContext = _contextFactory.Create(_tenantId!);
+        return await dbContext.Products.AsNoTracking()
+            .Where(p => p.ProductNr.StartsWith("w") && p.MainSupplierNr == supplierNr)
+            .ToListAsync();
+    }
 }
+
+

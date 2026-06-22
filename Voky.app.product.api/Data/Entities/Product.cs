@@ -37,14 +37,15 @@ public class Product : VismaEntity
     [Column("DME_NoSetUp")]
     public int? StartCostAmount { get; set; }
 
-
     [Column("DME_MainSup")]
     public required int MainSupplierNr { get; set; }
-    //public MainSupplier? MainSupplier { get; set; } SupNM finns i Actor table men visas i Visma. Antar att den hämtas automatiskt genom MainSupNr?
 
     [Column("DME_QGId")]
     public int? QuestionGroupId { get; set; }
 
     [Column("DME_NS_SalesPackageQty")]
-    public int Moq_customer {  get; set; }
+    public int Moq_customer { get; set; }
+
+    [Column("DME_NS_LifeCycle")]
+    public long? LifeCycle { get; set; }
 }

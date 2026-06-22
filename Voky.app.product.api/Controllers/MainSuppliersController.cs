@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Voky.app.product.api.Data;
+using Voky.app.product.api.DTOs;
 using Voky.app.product.api.Services;
 
 namespace Voky.app.product.api.Controllers;
@@ -25,5 +26,15 @@ public class MainSuppliersController(MainSupplierService mainSupplierService) : 
         mainSupplierService.UseTenant(tenantId);
         var supplier = await mainSupplierService.GetByIdAsync(supplierNr);
         return supplier is null ? NotFound() : Ok(supplier);
+    }
+
+    [HttpGet("{supplierNr:int}/costs")]
+    [ProducesResponseType<SupplierCostDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCostDetails([FromRoute] string tenantId, int supplierNr)
+    {
+        mainSupplierService.UseTenant(tenantId);
+        var costs = await mainSupplierService.GetCostDetailsAsync(supplierNr);
+        return costs is null ? NotFound() : Ok(costs);
     }
 }
