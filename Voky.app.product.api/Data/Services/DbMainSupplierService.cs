@@ -9,7 +9,7 @@ public class DbMainSupplierService(VokyDbContextFactory<VismaDbContext> contextF
     {
         CheckTenant();
         await using var dbContext = _contextFactory.Create(_tenantId!);
-        return await dbContext.MainSuppliers.AsNoTracking().ToListAsync();
+        return await dbContext.MainSuppliers.AsNoTracking().Where(s => s.SupplierNr != 0).ToListAsync();
     }
 
     public async Task<MainSupplier?> GetByIdAsync(int supplierNr)

@@ -5,23 +5,24 @@ using Voky.app.product.api.Services;
 namespace Voky.app.product.api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("{tenantId}/api/[controller]")]
 [Produces("application/json")]
 public class PriceMatricesController(PriceMatrixService priceMatrixService) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType<IEnumerable<PriceMatrix>>(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromRoute] string tenantId)
     {
-        var matrices = await priceMatrixService.GetAllAsync();
-        return Ok(matrices);
+        priceMatrixService.UseTenant(tenantId);
+        return Ok(await priceMatrixService.GetAllAsync());
     }
 
     [HttpGet("{id:int}")]
     [ProducesResponseType<PriceMatrix>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById([FromRoute] string tenantId, int id)
     {
+        priceMatrixService.UseTenant(tenantId);
         var matrix = await priceMatrixService.GetByIdAsync(id);
         return matrix is null ? NotFound() : Ok(matrix);
     }

@@ -5,6 +5,8 @@ namespace Voky.app.product.api.Services;
 
 public class CategoryService(DbCategoryService dbCategoryService)
 {
+    public void UseTenant(string tenantId) => dbCategoryService.UseTenant(tenantId);
+
     public async Task<IEnumerable<Category>> GetAllAsync() =>
         await dbCategoryService.GetAllAsync();
 

@@ -6,6 +6,8 @@ namespace Voky.app.product.api.Services;
 
 public class QuestionChoiceService(DbQuestionChoiceService dbQuestionChoiceService)
 {
+    public void UseTenant(string tenantId) => dbQuestionChoiceService.UseTenant(tenantId);
+
     public async Task<IEnumerable<QuestionChoice>> GetAllAsync() =>
         await dbQuestionChoiceService.GetAllAsync();
 

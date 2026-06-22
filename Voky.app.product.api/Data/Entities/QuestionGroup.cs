@@ -4,6 +4,8 @@ using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
+[Table("DME_QuestionGroups")]
+
 public class QuestionGroup : VismaEntity
 {
     [Key]

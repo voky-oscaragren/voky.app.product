@@ -9,7 +9,7 @@ public class DbProductService(VokyDbContextFactory<VismaDbContext> contextFactor
     {
         CheckTenant();
         await using var dbContext = _contextFactory.Create(_tenantId!);
-        return await dbContext.Products.AsNoTracking().ToListAsync();
+        return await dbContext.Products.AsNoTracking().Where(p => p.ProductNr.StartsWith("w")).ToListAsync();
     }
 
     public async Task<Product?> GetByIdAsync(string productNr)

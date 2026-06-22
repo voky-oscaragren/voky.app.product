@@ -5,6 +5,8 @@ namespace Voky.app.product.api.Services;
 
 public class PriceMatrixService(DbPriceMatrixService dbPriceMatrixService)
 {
+    public void UseTenant(string tenantId) => dbPriceMatrixService.UseTenant(tenantId);
+
     public async Task<IEnumerable<PriceMatrix>> GetAllAsync() =>
         await dbPriceMatrixService.GetAllAsync();
 

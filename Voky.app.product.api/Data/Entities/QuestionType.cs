@@ -4,6 +4,7 @@ using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
+[Table("QuestionTypes")]
 public class QuestionType : VismaEntity
 {
     [Key]

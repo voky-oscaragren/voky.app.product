@@ -5,6 +5,7 @@ using Voky.Shared.Visma.Database.Entities;
 
 namespace Voky.app.product.api.Data;
 
+[Table("PrDcMat")]
 public class PriceMatrix : VismaEntity
 {
     [Key]

@@ -5,6 +5,8 @@ namespace Voky.app.product.api.Services;
 
 public class ProductService(DbProductService dbProductService)
 {
+    public void UseTenant(string tenantId) => dbProductService.UseTenant(tenantId);
+
     public async Task<IEnumerable<Product>> GetAllAsync() =>
         await dbProductService.GetAllAsync();
 
