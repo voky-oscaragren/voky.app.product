@@ -11,10 +11,10 @@ public class PriceMatricesController(PriceMatrixService priceMatrixService) : Co
 {
     [HttpGet]
     [ProducesResponseType<IEnumerable<PriceMatrix>>(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll([FromRoute] string tenantId)
+    public async Task<IActionResult> GetAll([FromRoute] string tenantId, [FromQuery] string? productNr = null)
     {
         priceMatrixService.UseTenant(tenantId);
-        return Ok(await priceMatrixService.GetAllAsync());
+        return Ok(await priceMatrixService.GetAllAsync(productNr));
     }
 
     [HttpGet("{id:int}")]
