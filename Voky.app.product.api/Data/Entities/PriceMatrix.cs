@@ -32,5 +32,5 @@ public class PriceMatrix : VismaEntity
     public decimal SupplierNetPrice { get; set; }
 
     [Column("CstCur")]
-    public int CurrenyNr { get; set; }
+    public int CurrencyNr { get; set; }
 }
