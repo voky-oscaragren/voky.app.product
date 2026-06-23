@@ -10,7 +10,7 @@ namespace Voky.app.product.api.Data;
 public class Tag : VismaEntity
 {
     [Column("TxtNo")]
-    public int TagId { get; set; }
+    public long TagId { get; set; }
 
     [Column("TxtTp")]
     public long TextType { get; set; } = 20007;

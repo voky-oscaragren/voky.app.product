@@ -9,7 +9,7 @@ public class DbTagService(VokyDbContextFactory<VismaDbContext> contextFactory) :
     {
         CheckTenant();
         await using var dbContext = _contextFactory.Create(_tenantId!);
-        return await dbContext.Tags.AsNoTracking().ToListAsync();
+        return await dbContext.Tags.AsNoTracking().Where(t => t.TextType == 20007).ToListAsync();
     }
 
     public async Task<Tag?> GetByIdAsync(int id)
