@@ -8,5 +8,5 @@ public record CreatePriceMatrixDto(
     [Range(0, double.MaxValue)] decimal EndCustPrice,
     [Range(0, double.MaxValue)] decimal MOQ,
     [Range(0, double.MaxValue)] decimal SupplierNetPrice,
-    int CurrenyNr
+    int CurrencyNr
 );
